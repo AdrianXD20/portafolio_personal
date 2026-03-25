@@ -19,8 +19,7 @@ const actividadRoutes = require('./routes/actividadRoutes.js');
 const allowed = [
     'https://AdrianXD20.github.io', 
     'http://localhost:3000',
-    'https://api-mascoticos.onrender.com',
-    'https://api-mascoticobereal.onrender.com',
+    'https://portafolio-personal-uy4r.onrender.com',
     'CC-15-31-A0-5D-75',
     'CC-15-31-A0-5D-76',/*IP de Alexander*/
     'http://192.168.0.104:8081',/*IP de Frenks*/
