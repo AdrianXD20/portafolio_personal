@@ -67,30 +67,7 @@ router.post('/', (req, res) => actividadController.crearActividad(req, res));
  */
 router.get('/', (req, res) => actividadController.obtenerActividades(req, res));
 
-/**
- * @swagger
- * /actividades/{id}:
- *   get:
- *     summary: Obtener una actividad por ID
- *     description: Endpoint para obtener una actividad específica por su ID.
- *     tags:
- *       - Actividades
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *         description: ID de la actividad
- *     responses:
- *       200:
- *         description: Actividad obtenida exitosamente
- *       404:
- *         description: Actividad no encontrada
- *       500:
- *         description: Error en el servidor
- */
-router.get('/:id', (req, res) => actividadController.obtenerActividadPorId(req, res));
+
 
 /**
  * @swagger
@@ -198,5 +175,102 @@ router.delete('/:id', (req, res) => actividadController.eliminarActividad(req, r
  *           type: integer
  *           example: 2
  */
+
+/**
+ * @swagger
+ * /actividades/clase/{clase_id}:
+ *   get:
+ *     summary: Obtener actividades por clase
+ *     description: Devuelve todas las actividades de una clase específica (solo si el usuario pertenece a ella).
+ *     tags:
+ *       - Actividades
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: clase_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la clase
+ *     responses:
+ *       200:
+ *         description: Lista de actividades de la clase
+ *       403:
+ *         description: No autorizado
+ *       500:
+ *         description: Error en el servidor
+ */
+router.get('/clase/:clase_id', (req, res) => actividadController.obtenerPorClase(req, res));
+
+/**
+ * @swagger
+ * /actividades/proyecto/{proyecto_id}:
+ *   get:
+ *     summary: Obtener actividades por proyecto
+ *     description: Devuelve todas las actividades asociadas a un proyecto del usuario.
+ *     tags:
+ *       - Actividades
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: proyecto_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del proyecto
+ *     responses:
+ *       200:
+ *         description: Lista de actividades del proyecto
+ *       403:
+ *         description: No autorizado
+ *       500:
+ *         description: Error en el servidor
+ */
+router.get('/proyecto/:proyecto_id', (req, res) => actividadController.obtenerPorProyecto(req, res));
+
+/**
+ * @swagger
+ * /actividades/personales:
+ *   get:
+ *     summary: Obtener actividades personales
+ *     description: Devuelve todas las actividades del usuario que no están asociadas a ninguna clase.
+ *     tags:
+ *       - Actividades
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de actividades personales
+ *       500:
+ *         description: Error en el servidor
+ */
+router.get('/personales', (req, res) => actividadController.obtenerPersonales(req, res));
+
+/**
+ * @swagger
+ * /actividades/{id}:
+ *   get:
+ *     summary: Obtener una actividad por ID
+ *     description: Endpoint para obtener una actividad específica por su ID.
+ *     tags:
+ *       - Actividades
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la actividad
+ *     responses:
+ *       200:
+ *         description: Actividad obtenida exitosamente
+ *       404:
+ *         description: Actividad no encontrada
+ *       500:
+ *         description: Error en el servidor
+ */
+router.get('/:id', (req, res) => actividadController.obtenerActividadPorId(req, res));
 
 module.exports = router;

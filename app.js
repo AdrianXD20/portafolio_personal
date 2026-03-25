@@ -13,7 +13,7 @@ const notaRoutes = require('./routes/notaRoutes.js');
 const logroRoutes = require('./routes/logroRoutes.js');
 const experienciaRoutes = require('./routes/experienciaRoutes.js');
 const actividadRoutes = require('./routes/actividadRoutes.js');
-
+const ClaseRoutes = require('./routes/claseRoutes.js');
 
 
 const allowed = [
@@ -52,6 +52,7 @@ app.use('/notas', notaRoutes);
 app.use('/logros', logroRoutes);
 app.use('/experiencias', experienciaRoutes);
 app.use('/actividades', actividadRoutes);
+app.use('/clases', ClaseRoutes);
 
 
 // Puerto
