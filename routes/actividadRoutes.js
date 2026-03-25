@@ -18,7 +18,7 @@ const actividadController = new ActividadController(actividadService);
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             required:
@@ -110,7 +110,7 @@ router.get('/:id', (req, res) => actividadController.obtenerActividadPorId(req, 
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:

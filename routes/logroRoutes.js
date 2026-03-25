@@ -18,7 +18,7 @@ const logroController = new LogroController(logroService);
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             required:
@@ -110,7 +110,7 @@ router.get('/:id', (req, res) => logroController.obtenerLogroPorId(req, res));
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:
@@ -122,8 +122,8 @@ router.get('/:id', (req, res) => logroController.obtenerLogroPorId(req, res));
  *                 description: Descripción del logro
  *               fecha:
  *                 type: string
- *                 format: date
- *                 description: Fecha del logro
+*                 format: date
+*                 description: Fecha del logro
  *               tipo:
  *                 type: string
  *                 description: Tipo de logro(Academico','Extracurricular','Personal','Profesional')

@@ -78,7 +78,7 @@ router.post('/register',upload.single('foto_perfil'),(req,res) => userController
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             required:
@@ -87,6 +87,7 @@ router.post('/register',upload.single('foto_perfil'),(req,res) => userController
  *             properties:
  *               email:
  *                 type: string
+ *                 format: email
  *                 description: Correo del usuario
  *               contraseña:
  *                 type: string

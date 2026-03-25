@@ -18,7 +18,7 @@ const experienciaController = new ExperienciaController(experienciaService);
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             required:
@@ -107,7 +107,7 @@ router.get('/:id', (req, res) => experienciaController.obtenerExperienciaPorId(r
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:

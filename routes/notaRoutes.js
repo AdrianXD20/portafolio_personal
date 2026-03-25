@@ -18,7 +18,7 @@ const notaController = new NotaController(notaService);
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             required:
@@ -107,7 +107,7 @@ router.get('/:id', (req, res) => notaController.obtenerNotaPorId(req, res));
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:

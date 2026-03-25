@@ -18,7 +18,7 @@ const proyectoController = new ProyectoController(proyectoService);
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             required:
@@ -100,7 +100,7 @@ router.get('/:id', (req, res) => proyectoController.obtenerProyectoPorId(req, re
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:
