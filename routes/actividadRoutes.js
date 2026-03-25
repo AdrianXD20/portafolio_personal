@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ActividadService = require('../service/actividadService.js');
 const ActividadController = require('../controller/actividadController.js');
-// const { verifyToken } = require('../middleware/authMiddleware.js'); // Descomentar si necesitas autenticación
+const { verifyToken } = require('../middleware/authMiddleware.js');
 
 const actividadService = new ActividadService();
 const actividadController = new ActividadController(actividadService);
@@ -15,6 +15,8 @@ const actividadController = new ActividadController(actividadService);
  *     description: Endpoint para crear una nueva actividad en la aplicación.
  *     tags:
  *       - Actividades
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -23,6 +25,7 @@ const actividadController = new ActividadController(actividadService);
  *             type: object
  *             required:
  *               - titulo
+ *               - proyecto_id
  *             properties:
  *               titulo:
  *                 type: string
@@ -37,19 +40,20 @@ const actividadController = new ActividadController(actividadService);
  *               estado:
  *                 type: string
  *                 description: Estado de la actividad('Completado','En progreso','Planeado')
- *               usuario_id:
- *                 type: integer
- *                 example: 3
  *               proyecto_id:
  *                 type: integer
  *                 example: 2
+ *               clase_id:
+ *                 type: integer
+ *                 example: 1
+ *                 description: ID de la clase (opcional)
  *     responses:
  *       201:
  *         description: Actividad creada exitosamente
  *       500:
  *         description: Error en el servidor
  */
-router.post('/', (req, res) => actividadController.crearActividad(req, res));
+router.post('/', verifyToken, (req, res) => actividadController.crearActividad(req, res));
 
 /**
  * @swagger
@@ -110,6 +114,10 @@ router.get('/', (req, res) => actividadController.obtenerActividades(req, res));
  *               proyecto_id:
  *                 type: integer
  *                 example: 2
+ *               clase_id:
+ *                 type: integer
+ *                 example: 1
+ *                 description: ID de la clase (opcional)
  *     responses:
  *       200:
  *         description: Actividad actualizada exitosamente
@@ -174,6 +182,10 @@ router.delete('/:id', (req, res) => actividadController.eliminarActividad(req, r
  *         proyecto_id:
  *           type: integer
  *           example: 2
+ *         clase_id:
+ *           type: integer
+ *           example: 1
+ *           description: ID de la clase (opcional)
  */
 
 /**

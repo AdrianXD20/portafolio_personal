@@ -46,6 +46,24 @@ class ClaseService {
     });
   }
 
+  async obtenerAlumnosDeClase(clase_id, profesor_id) {
+    // Verificar que el profesor es el de la clase
+    const clase = await Clases.findOne({ where: { id: clase_id, profesor_id } });
+    if (!clase) {
+      return { error: "No eres el profesor de esta clase" };
+    }
+
+    return await ClaseAlumno.findAll({
+      where: { clase_id },
+      include: [
+        {
+          model: Usuario,
+          attributes: ['id', 'nombre', 'email']
+        }
+      ]
+    });
+  }
+
   async unirseClase(codigo, usuario_id) {
     const clase = await Clases.findOne({ where: { codigo } });
 

@@ -32,6 +32,23 @@ class claseController {
     }
   }
 
+  async obtenerAlumnosDeClase(req, res) {
+    try {
+      const clase_id = req.params.id;
+      const profesor_id = req.user.id;
+
+      const alumnos = await claseService.obtenerAlumnosDeClase(clase_id, profesor_id);
+
+      if (alumnos?.error) {
+        return res.status(403).json(alumnos);
+      }
+
+      res.json(alumnos);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
   async unirseClase(req, res) {
     try {
       const usuario_id = req.user.id;

@@ -48,6 +48,31 @@ router.get('/', verifyToken, (req, res) =>
 
 /**
  * @swagger
+ * /clases/{id}/alumnos:
+ *   get:
+ *     summary: Obtener alumnos de una clase (solo profesor)
+ *     tags: [Clases]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la clase
+ *     responses:
+ *       200:
+ *         description: Lista de alumnos
+ *       403:
+ *         description: No autorizado
+ */
+router.get('/:id/alumnos', verifyToken, (req, res) =>
+  claseController.obtenerAlumnosDeClase(req, res)
+);
+
+/**
+ * @swagger
  * /clases/unirse:
  *   post:
  *     summary: Unirse a una clase con código
