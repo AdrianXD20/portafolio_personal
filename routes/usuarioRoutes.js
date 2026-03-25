@@ -78,7 +78,7 @@ router.post('/register',upload.single('foto_perfil'),(req,res) => userController
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
@@ -115,12 +115,13 @@ router.post('/register',upload.single('foto_perfil'),(req,res) => userController
  */
 router.post('/login',(req,res)=> userController.login(req,res));
 
- /**
+/**
  * @swagger
  * /recuperar:
  *   post:
  *     summary: Solicitar recuperación de contraseña
- *     tags: [Autenticación]
+ *     tags:
+ *       - Autenticación
  *     requestBody:
  *       required: true
  *       content:
@@ -144,7 +145,8 @@ router.post('/login',(req,res)=> userController.login(req,res));
  * /resetear:
  *   post:
  *     summary: Restablecer contraseña
- *     tags: [Autenticación]
+ *     tags:
+ *       - Autenticación
  *     requestBody:
  *       required: true
  *       content:

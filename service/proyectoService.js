@@ -1,34 +1,39 @@
-import { Proyecto } from "../models/proyecto.js";
+const Proyecto = require("../models/proyecto.js");
 
+class ProyectoService {
+ 
 // Crear proyecto
-export const crearProyecto = async (data) => {
-  return await Proyecto .create(data);
-};
+    async crearProyecto(nuevoProyecto)  {
+    return Proyecto.create(nuevoProyecto);
+    }
 
 // Obtener todas
-export const obtenerProyectos = async () => {
-  return await Proyecto.findAll();
-};
+  async obtenerProyectos()  {
+    return Proyecto.findAll();
+  }
 
 // Obtener por ID
-export const obtenerProyectoPorId = async (id) => {
-  return await Proyecto.findByPk(id);
-};
+  async obtenerProyectoPorId(id) {
+    return Proyecto.findByPk(id);
+  }
 
 // Actualizar
-export const actualizarProyecto = async (id, data) => {
-  const proyecto = await Proyecto.findByPk(id);
-  if (!proyecto) return null;
+  async actualizarProyecto(id, data)  {
+    const proyecto = await Proyecto.findByPk(id);
+    if (!proyecto) return null;
 
-  await proyecto.update(data);
-  return proyecto;
-};
+    await proyecto.update(data);
+    return proyecto;
+  }
 
 // Eliminar
-export const eliminarProyecto = async (id) => {
-  const proyecto = await Proyecto.findByPk(id);
-  if (!proyecto) return null;
+  async eliminarProyecto(id)  {
+    const proyecto = await Proyecto.findByPk(id);
+    if (!proyecto) return null;
 
-  await proyecto.destroy();
-  return true;
-};
+    await proyecto.destroy();
+    return true;
+  }
+}
+
+module.exports =ProyectoService;

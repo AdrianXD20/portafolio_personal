@@ -1,7 +1,7 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../config/db.js";
+const { DataTypes } = require("sequelize");
+const sequelize = require("../database/conexion.js") ;
 
-export const Proyecto = sequelize.define("proyecto", {
+const Proyecto = sequelize.define("proyecto", {
   titulo: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -9,4 +9,16 @@ export const Proyecto = sequelize.define("proyecto", {
   descripcion: {
     type: DataTypes.TEXT,
   },
+  usuario_id:{
+    type: DataTypes.INTEGER,
+    allowNull: true, 
+    references: {
+      model: 'usuario', 
+      key: 'id', 
+    },
+  },
+},{
+  timestamps: false
 });
+
+module.exports = Proyecto;

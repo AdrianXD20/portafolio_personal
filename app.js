@@ -7,27 +7,23 @@ const swaggerUI = require('swagger-ui-express');
 const specs = require('./swagger/swagger.js');
 const env = require('dotenv').config();
 
-const usuarioRoutes = require('./routes/usuarioRoutes.js'); 
-
+const usuarioRoutes = require('./routes/usuarioRoutes.js');
+const proyectoRoutes = require('./routes/proyectoRoutes.js');
+const notaRoutes = require('./routes/notaRoutes.js');
+const logroRoutes = require('./routes/logroRoutes.js');
+const experienciaRoutes = require('./routes/experienciaRoutes.js');
+const actividadRoutes = require('./routes/actividadRoutes.js');
 
 
 
 const allowed = [
     'https://AdrianXD20.github.io', 
-    'http://127.0.0.1:5501',
-    'http://127.0.0.1:5500', 
     'http://localhost:3000',
-    'http://localhost:5173',
-    'http://localhost:5174',
     'https://api-mascoticos.onrender.com',
     'https://api-mascoticobereal.onrender.com',
     'CC-15-31-A0-5D-75',
     'CC-15-31-A0-5D-76',/*IP de Alexander*/
     'http://192.168.0.104:8081',/*IP de Frenks*/
-    'https://mascotico-luna.vercel.app',/*MascoTico WEB*/
-    'https://mascotico-luna-pjzx81ixt-alexyah064s-projects.vercel.app/', /*Front de Admin */
-    'https://mascotico-web.vercel.app',
-    'mysql://uq92kg8809ftify2:GzKZ4C98MmKvQvv32tP1@bpdddt3swjtee4chka49-mysql.services.clever-cloud.com:3306/bpdddt3swjtee4chka49%20Host%20bpdddt3swjtee4chka49-mysql.services.clever-cloud.com'
 ];
 
 app.use(cors({
@@ -52,6 +48,11 @@ app.use(body.json());
 
  
 app.use('/', usuarioRoutes);
+app.use('/proyectos', proyectoRoutes);
+app.use('/notas', notaRoutes);
+app.use('/logros', logroRoutes);
+app.use('/experiencias', experienciaRoutes);
+app.use('/actividades', actividadRoutes);
 
 
 // Puerto

@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize= require('../database/conexion');
 
-const Logros = sequelize.define("logros", {
+const Actividades = sequelize.define("actividades", {
   titulo: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -12,7 +12,7 @@ const Logros = sequelize.define("logros", {
   fecha: {
     type: DataTypes.DATE,
   },
-  tipo: {
+  estado: {
     type: DataTypes.STRING,
   },
   usuario_id: {
@@ -35,4 +35,4 @@ const Logros = sequelize.define("logros", {
   timestamps: false
 });
 
-module.exports = Logros;
+module.exports = Actividades;

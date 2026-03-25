@@ -1,7 +1,7 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../config/db.js";
+const { DataTypes } = require("sequelize");
+const sequelize= require('../database/conexion');
 
-export const Nota = sequelize.define("Nota", {
+const Nota = sequelize.define("notas", {
   titulo: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -9,4 +9,27 @@ export const Nota = sequelize.define("Nota", {
   contenido: {
     type: DataTypes.TEXT,
   },
+  fecha: {
+    type: DataTypes.DATE,
+  },
+  usuario_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'usuario',
+      key: 'id',
+    },
+  },
+  proyecto_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'proyecto',
+      key: 'id',
+    },
+  }
+},{
+  timestamps: false
 });
+
+module.exports = Nota;
