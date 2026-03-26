@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const claseController = require('../controller/claseController');
-const { verifyToken } = require('../middleware/authMiddleware');
+const { verifyToken, requireRole } = require('../middleware/authMiddleware');
 
 /**
  * @swagger
@@ -112,6 +112,24 @@ router.post('/unirse', verifyToken, (req, res) =>
  */
 router.get('/profesor', verifyToken, (req, res) =>
   claseController.obtenerClasesProfesor(req, res)
+);
+
+/**
+ * @swagger
+ * /clases/alumno:
+ *   get:
+ *     summary: Obtener clases del alumno
+ *     tags: [Clases]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de clases del alumno
+ *       403:
+ *         description: No autorizado
+ */
+router.get('/alumno', verifyToken, requireRole('USER'), (req, res) =>
+  claseController.obtenerClasesAlumno(req, res)
 );
 
 module.exports = router;

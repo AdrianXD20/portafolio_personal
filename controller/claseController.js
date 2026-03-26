@@ -78,6 +78,15 @@ class claseController {
     }
   }
 
+  async obtenerClasesAlumno(req, res) {
+    try {
+      const clases = await claseService.obtenerClasesAlumno(req.user.id);
+      res.json(clases);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
 }
 
 module.exports = new claseController();

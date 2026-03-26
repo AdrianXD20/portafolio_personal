@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ActividadService = require('../service/actividadService.js');
 const ActividadController = require('../controller/actividadController.js');
-const { verifyToken } = require('../middleware/authMiddleware.js');
+const { verifyToken, requireRole } = require('../middleware/authMiddleware.js');
 
 const actividadService = new ActividadService();
 const actividadController = new ActividadController(actividadService);
@@ -53,7 +53,7 @@ const actividadController = new ActividadController(actividadService);
  *       500:
  *         description: Error en el servidor
  */
-router.post('/', verifyToken, (req, res) => actividadController.crearActividad(req, res));
+router.post('/', verifyToken, requireRole('USER'), (req, res) => actividadController.crearActividad(req, res));
 
 /**
  * @swagger
@@ -213,7 +213,7 @@ router.delete('/:id', (req, res) => actividadController.eliminarActividad(req, r
  *       500:
  *         description: Error en el servidor
  */
-router.get('/clase/:clase_id', (req, res) => actividadController.obtenerPorClase(req, res));
+router.get('/clase/:clase_id', verifyToken, (req, res) => actividadController.obtenerPorClase(req, res));
 
 /**
  * @swagger
@@ -240,7 +240,7 @@ router.get('/clase/:clase_id', (req, res) => actividadController.obtenerPorClase
  *       500:
  *         description: Error en el servidor
  */
-router.get('/proyecto/:proyecto_id', (req, res) => actividadController.obtenerPorProyecto(req, res));
+router.get('/proyecto/:proyecto_id', verifyToken, (req, res) => actividadController.obtenerPorProyecto(req, res));
 
 /**
  * @swagger
@@ -258,7 +258,27 @@ router.get('/proyecto/:proyecto_id', (req, res) => actividadController.obtenerPo
  *       500:
  *         description: Error en el servidor
  */
-router.get('/personales', (req, res) => actividadController.obtenerPersonales(req, res));
+router.get('/personales', verifyToken, (req, res) => actividadController.obtenerPersonales(req, res));
+
+/**
+ * @swagger
+ * /actividades/mis:
+ *   get:
+ *     summary: Obtener todas las actividades del usuario
+ *     description: Devuelve todas las actividades creadas por el usuario logueado (personales, de clases y proyectos).
+ *     tags:
+ *       - Actividades
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de todas las actividades del usuario
+ *       403:
+ *         description: No autorizado
+ *       500:
+ *         description: Error en el servidor
+ */
+router.get('/mis', verifyToken, requireRole('USER'), (req, res) => actividadController.obtenerMisActividades(req, res));
 
 /**
  * @swagger
@@ -283,6 +303,6 @@ router.get('/personales', (req, res) => actividadController.obtenerPersonales(re
  *       500:
  *         description: Error en el servidor
  */
-router.get('/:id', (req, res) => actividadController.obtenerActividadPorId(req, res));
+router.get('/:id', verifyToken, (req, res) => actividadController.obtenerActividadPorId(req, res));
 
 module.exports = router;

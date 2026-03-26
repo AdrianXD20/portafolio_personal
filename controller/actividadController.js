@@ -41,10 +41,15 @@ class ActividadController {
   async obtenerActividadPorId(req, res) {
     try {
       const id = req.params.id;
-      const actividad = await this.actividadService.obtenerActividadPorId(id);
+      const usuario_id = req.user.id;
+      const actividad = await this.actividadService.obtenerActividadPorId(id, usuario_id);
 
       if (!actividad) {
         return res.status(404).json({ message: 'Actividad no encontrada' });
+      }
+
+      if (actividad?.error) {
+        return res.status(403).json(actividad);
       }
 
       return res.status(200).json(actividad);
@@ -166,6 +171,20 @@ class ActividadController {
     } catch (error) {
       console.error('Error al eliminar actividad:', error);
       res.status(500).json({ message: 'Error al eliminar la actividad', error: error.message });
+    }
+  }
+
+  async obtenerMisActividades(req, res) {
+    try {
+      const usuario_id = req.user.id;
+
+      const actividades = await this.actividadService.obtenerActividadesPorUsuario(usuario_id);
+
+      res.status(200).json(actividades);
+
+    } catch (error) {
+      console.error('Error al obtener mis actividades:', error);
+      res.status(500).json({ message: 'Error al obtener las actividades', error: error.message });
     }
   }
 }

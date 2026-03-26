@@ -34,6 +34,11 @@ class ProyectoService {
     await proyecto.destroy();
     return true;
   }
+
+  // Obtener por usuario
+  async obtenerProyectosPorUsuario(usuario_id) {
+    return Proyecto.findAll({ where: { usuario_id } });
+  }
 }
 
 module.exports =ProyectoService;

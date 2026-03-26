@@ -66,6 +66,17 @@ class ProyectoController {
       res.status(500).json({ message: 'Error al eliminar el proyecto', error: error.message });
     }
   }
+
+  async obtenerProyectosPorUsuario(req, res) {
+    try {
+      const usuario_id = req.user.id;
+      const proyectos = await this.proyectoService.obtenerProyectosPorUsuario(usuario_id);
+      res.status(200).json(proyectos);
+    } catch (error) {
+      console.error('Error al obtener proyectos por usuario:', error);
+      res.status(500).json({ message: 'Error al obtener los proyectos', error: error.message });
+    }
+  }
 }
 
 module.exports = ProyectoController;

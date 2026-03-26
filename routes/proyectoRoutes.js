@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ProyectoService = require('../service/proyectoService.js');
 const ProyectoController = require('../controller/proyectoController.js');
-// const { verifyToken } = require('../middleware/authMiddleware.js'); // Descomentar si necesitas autenticación
+const { verifyToken, requireRole } = require('../middleware/authMiddleware.js');
 
 const proyectoService = new ProyectoService();
 const proyectoController = new ProyectoController(proyectoService);
@@ -162,5 +162,25 @@ router.delete('/:id', (req, res) => proyectoController.eliminarProyecto(req, res
  *           type: string
  *           description: Descripción del proyecto
  */
+
+/**
+ * @swagger
+ * /proyectos/usuario:
+ *   get:
+ *     summary: Obtener proyectos del usuario
+ *     description: Devuelve todos los proyectos creados por el usuario logueado.
+ *     tags:
+ *       - Proyectos
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de proyectos del usuario
+ *       403:
+ *         description: No autorizado
+ *       500:
+ *         description: Error en el servidor
+ */
+router.get('/usuario', verifyToken, requireRole('USER'), (req, res) => proyectoController.obtenerProyectosPorUsuario(req, res));
 
 module.exports = router;

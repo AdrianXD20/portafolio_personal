@@ -19,11 +19,20 @@ function verifyToken(req, res, next) {
 }
 
 function isAdmin(req,res,next){
-    if (req.user.rol !== 'admin'){
+    if (!req.user || req.user.rol.toUpperCase() !== 'ADMIN'){
         return res.status(403).json({error :"Acceso denegado Plebi"})
     }
     next();
 };
 
+function requireRole(rol){
+    return (req,res,next) => {
+        if (!req.user) return res.status(401).json({error: 'Token no autorizado'});
+        if (req.user.rol.toUpperCase() !== rol.toUpperCase()){
+            return res.status(403).json({error: `Se requiere rol ${rol}`});
+        }
+        next();
+    };
+};
 
-module.exports = { verifyToken, isAdmin };
+module.exports = { verifyToken, isAdmin, requireRole };

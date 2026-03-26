@@ -58,6 +58,7 @@ class ClaseService {
       include: [
         {
           model: Usuario,
+          as: 'usuario',
           attributes: ['id', 'nombre', 'email']
         }
       ]
@@ -95,7 +96,16 @@ class ClaseService {
   }
 
   async obtenerClasesAlumno(usuario_id) {
-    return await ClaseAlumno.findAll({ where: { usuario_id } });
+    return await ClaseAlumno.findAll({
+      where: { usuario_id },
+      include: [
+        {
+          model: Clases,
+          as: 'clase',
+          attributes: ['id', 'nombre', 'codigo']
+        }
+      ]
+    });
   }
 }
 
