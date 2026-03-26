@@ -21,6 +21,7 @@ const allowed = [
     'http://localhost:3000',
     'https://portafolio-personal-uy4r.onrender.com',
     'CC-15-31-A0-5D-75',
+    `http://localhost:5173`,
     'CC-15-31-A0-5D-76',/*IP de Alexander*/
     'http://192.168.0.104:8081',/*IP de Frenks*/
 ];
@@ -45,7 +46,7 @@ app.use(body.urlencoded({ extended: false }));
 app.use(body.json()); 
 
 
- 
+
 app.use('/', usuarioRoutes);
 app.use('/proyectos', proyectoRoutes);
 app.use('/notas', notaRoutes);

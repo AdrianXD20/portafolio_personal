@@ -79,8 +79,12 @@ class UserController {
     try {
       const id = req.params.id;
       const datosActualizados = req.body;
+      if (datosActualizados.contraseña) {
+        datosActualizados.password = datosActualizados.contraseña;
+        delete datosActualizados.contraseña;
+      }
       if (req.file) {
-        datosActualizados.imagen_perfil = req.file.path;
+        datosActualizados.foto_perfil = req.file.path;
       }
       const user = await this.userService.actualizarUsuario(id, datosActualizados);
       if (user) {
