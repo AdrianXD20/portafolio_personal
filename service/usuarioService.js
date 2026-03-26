@@ -1,9 +1,15 @@
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const jwt = require('jsonwebtoken');
 const User = require('../models/usuario');
 require('dotenv').config();
+
+// SendGrid API key
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
 
 const secretKey = process.env.secretKey;
 
@@ -73,24 +79,35 @@ class UserService {
   
     await user.update({ reset_token: token, token_expira: tokenExpira });
   
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: { 
-        user: process.env.email, 
-        pass: process.env.email_password 
-      }
-    });
-  
-    const mailOptions = {
-      from: process.env.email,
+    const message = {
       to: user.email,
+      from: process.env.SENDGRID_FROM_EMAIL || process.env.email,
       subject: 'Recuperación de contraseña',
-      text: `Usa el siguiente enlace para restablecer tu contraseña: http://tudominio.com/reset-password?token=${token}`
+      text: `Usa el siguiente enlace para restablecer tu contraseña: http://tudominio.com/reset-password?token=${token}`,
+      html: `<p>Usa el siguiente enlace para restablecer tu contraseña:</p><p><a href="http://tudominio.com/reset-password?token=${token}">Restablecer contraseña</a></p>`
     };
-  
+
     try {
-      let info = await transporter.sendMail(mailOptions);
-      console.log('Correo enviado: ', info.response);
+      if (process.env.SENDGRID_API_KEY) {
+        const response = await sgMail.send(message);
+        console.log('SendGrid respuesta:', response[0]?.statusCode || 'OK');
+      } else {
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.email,
+            pass: process.env.email_password
+          }
+        });
+        const info = await transporter.sendMail({
+          from: process.env.email,
+          to: user.email,
+          subject: 'Recuperación de contraseña',
+          text: message.text
+        });
+        console.log('Nodemailer respuesta:', info.response);
+      }
+
       return { message: 'Correo enviado correctamente' };
     } catch (error) {
       console.error('Error al enviar correo: ', error);
