@@ -126,7 +126,7 @@ router.get('/', (req, res) => actividadController.obtenerActividades(req, res));
  *       500:
  *         description: Error en el servidor
  */
-router.put('/:id', (req, res) => actividadController.actualizarActividad(req, res));
+router.put('/:id', verifyToken, requireRole('USER'), (req, res) => actividadController.actualizarActividad(req, res));
 
 /**
  * @swagger
@@ -151,7 +151,7 @@ router.put('/:id', (req, res) => actividadController.actualizarActividad(req, re
  *       500:
  *         description: Error en el servidor
  */
-router.delete('/:id', (req, res) => actividadController.eliminarActividad(req, res));
+router.delete('/:id', verifyToken, requireRole('USER'), (req, res) => actividadController.eliminarActividad(req, res));
 
 /**
  * @swagger
@@ -303,6 +303,6 @@ router.get('/mis', verifyToken, requireRole('USER'), (req, res) => actividadCont
  *       500:
  *         description: Error en el servidor
  */
-router.get('/:id', verifyToken, (req, res) => actividadController.obtenerActividadPorId(req, res));
+router.get('/:id', verifyToken, requireRole('USER'), (req, res) => actividadController.obtenerActividadPorId(req, res));
 
 module.exports = router;
